@@ -9,65 +9,66 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 const Login = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
-  const toast = useToast()
+  const toast = useToast();
   const handleClick = () => {
     setShow((pre) => !pre);
   };
 
   const submitHandler = async () => {
-    setLoading(true)
-    if(!email || !password){
+    setLoading(true);
+    if (!email || !password) {
       toast({
         title: "Please Provide All the Details",
-        position:'top',
+        position: "top",
         status: "info",
         duration: 5000,
         isClosable: true,
       });
-      setLoading(false)
-      return
+      setLoading(false);
+      return;
     }
-    try{
-       const config = {
-        headers :{
-          "Content-type":"application/json",
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
         },
-       }
+      };
 
-       const {data} = await axios.post("http://localhost:4500/user/login",{email,password},config)
-       console.log(data)
-         setLoading(false)
-        toast({
-          title: "Login Successfull",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        });
-       
-      
+      const { data } = await axios.post(
+        "http://localhost:4500/user/login",
+        { email, password },
+        config
+      );
+      console.log(data);
+      setLoading(false);
+      toast({
+        title: "Login Successfull",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
 
-      localStorage.setItem('userInfo',JSON.stringify(data))
-      setLoading(false)
-     
-    }catch(error){
-      console.log(error)
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
       toast({
         title: "Error Occured!",
-        description:error.response.data.message,
+        description: error.response.data.message,
         status: "error",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false)
-    }  
+      setLoading(false);
+    }
   };
   return (
     <VStack spacing={"5PX"}>
@@ -95,7 +96,13 @@ const Login = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <Button color="blue" width="100%" mt={15} isLoading={loading} onClick={submitHandler}>
+      <Button
+        color="blue"
+        width="100%"
+        mt={15}
+        isLoading={loading}
+        onClick={submitHandler}
+      >
         Login
       </Button>
     </VStack>
