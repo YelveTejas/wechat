@@ -10,8 +10,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ChatState } from "../Context/ChatProvider";
 const Login = () => {
-  const [show, setShow] = useState(false);
+  const {setUser} = ChatState()
+  const navigate = useNavigate()
+  const [show, setShow] = (useState)(false);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -21,6 +25,7 @@ const Login = () => {
   };
 
   const submitHandler = async () => {
+   
     setLoading(true);
     if (!email || !password) {
       toast({
@@ -45,27 +50,28 @@ const Login = () => {
         { email, password },
         config
       );
-      console.log(data);
       setLoading(false);
       toast({
         title: "Login Successfull",
         status: "success",
-        duration: 5000,
+        duration: 3000,
+        position:"top-right",
         isClosable: true,
-        position: "bottom",
       });
 
+      setUser(data)
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
+      navigate("/chat")
     } catch (error) {
       console.log(error);
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
-        position: "bottom",
+        position: "top-right",
       });
       setLoading(false);
     }
@@ -76,6 +82,7 @@ const Login = () => {
         <FormLabel>Email</FormLabel>
         <Input
           name="email"
+          color={'white'}
           placeholder="Enter youe email"
           onChange={(e) => setEmail(e.target.value)}
         ></Input>
@@ -87,6 +94,7 @@ const Login = () => {
             name="password"
             type={show ? "text" : "password"}
             placeholder="Enter you name"
+            color={'white'}
             onChange={(e) => setPassword(e.target.value)}
           ></Input>
           <InputRightElement width={"4.5rem"}>

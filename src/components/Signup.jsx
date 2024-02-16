@@ -136,16 +136,17 @@ const Signup = () => {
     <VStack spacing={"5PX"}>
       <FormControl isRequired>
         <FormLabel>Name</FormLabel>
-        <Input name="name" placeholder="Enter you name" onChange={(e)=>getdata(e)}></Input>
+        <Input color={'white'} name="name" placeholder="Enter you name" onChange={(e)=>getdata(e)}></Input>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Email</FormLabel>
-        <Input name="email" placeholder="Enter youe email" onChange={(e)=>getdata(e)}></Input>
+        <Input color={'white'} name="email" placeholder="Enter youe email" onChange={(e)=>getdata(e)}></Input>
       </FormControl>
       <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
+            color='white'
             name="password"
             onChange={(e)=>getdata(e)}
             type={show ? "text" : "password"}
@@ -162,6 +163,7 @@ const Signup = () => {
         <FormLabel> Confirm Password</FormLabel>
         <InputGroup>
           <Input
+          color='white'
           onChange={(e)=>getdata(e)}
             name="confirmpassword"
             type={show ? "text" : "password"}
