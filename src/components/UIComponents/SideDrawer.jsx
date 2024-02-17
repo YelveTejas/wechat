@@ -32,6 +32,8 @@ import Chatloading from "./Chatloading";
 import Userslist from "./Userslist";
 import { backendurl, url } from "../../pages/Home";
 import { config } from "../../config/token";
+//import {NotificationBadge} from 'react-no'
+import { getSender } from "../../config/Chatlogic";
 
 const SideDrawer = () => {
   const toast = useToast();
@@ -42,7 +44,8 @@ const SideDrawer = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [chatloading, setChatloading] = useState(false);
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const { user, setSelectedChat, chats, setChats,notification,setNotification } = ChatState();
+  console.log(notification,'notification')
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     setUser()
@@ -134,8 +137,20 @@ const SideDrawer = () => {
         <Box>
           <Menu>
             <MenuButton p={1}>
+              <NotificationBadge/>
               <FaBell fontSize={"2xl"} margin={1} />
             </MenuButton>
+            <MenuList pl={2}>
+              {!notification.length && "No New Messages"}
+              {notification.map((e)=>
+              <MenuItem key={e._id} onClick={()=>{
+                setSelectedChat(e.chat)
+                setNotification(notification.filter((n)=>n!==e))
+              }}>
+                {e.chat.isGroupChat ?`New message in ${e.chat.chatName}`:`New Message from ${getSender(user,e.chat.users)}` }
+              </MenuItem>
+              )}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton
