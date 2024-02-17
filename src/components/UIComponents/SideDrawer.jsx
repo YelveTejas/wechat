@@ -45,10 +45,11 @@ const SideDrawer = () => {
   const [loading, setLoading] = useState(false);
   const [chatloading, setChatloading] = useState(false);
   const { user, setSelectedChat, chats, setChats,notification,setNotification } = ChatState();
-  console.log(notification,'notification')
+ 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     setUser()
+    setSelectedChat('')
     navigate("/");
   };
   const handleSearch = async () => {
@@ -118,11 +119,12 @@ const SideDrawer = () => {
   return (
     <>
       <Flex
+      
         justifyContent={"space-between"}
         alignItems={"center"}
         bg="#38B2AC"
         w="100%"
-        p="5px 10px 5px 10px"
+        p="5px 30px"
         
       >
         <Tooltip label="Search User to Chat" hasArrow placement="bottom-end">
@@ -134,11 +136,10 @@ const SideDrawer = () => {
           </Button>
         </Tooltip>
         <Text fontSize={"22px"} fontWeight={'600'} color={'white'} fontFamily={'sans-serif'}>Chit-Chat</Text>
-        <Box>
+        <Flex alignItems={'center'} gap={3}>
           <Menu>
             <MenuButton p={1}>
-              <NotificationBadge/>
-              <FaBell fontSize={"2xl"} margin={1} />
+              <FaBell fontSize={"2xl"} margin={1} size='20px' />
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
@@ -154,12 +155,10 @@ const SideDrawer = () => {
           </Menu>
           <Menu>
             <MenuButton
-              as={Button}
-              size={"sm"}
-              rightIcon={<FaChevronDown size={"10px"} />}
+              
             >
               <Avatar
-                size="xs"
+                size="sm"
                 cursor={"pointer"}
                 name={user.name}
                 src={user.pic}
@@ -172,7 +171,7 @@ const SideDrawer = () => {
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
-        </Box>
+        </Flex>
       </Flex>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay>

@@ -16,6 +16,7 @@ const signupData = {
   email: "",
   password: "",
   confirmpassword: "",
+  pic:""
 };
 const Signup = () => {
   const toast = useToast();
@@ -31,6 +32,7 @@ const Signup = () => {
     setSignupdata({...signupdata,[e.target.name]:e.target.value})
 
   }
+
 
 
   const postDetail = (pic) => {
@@ -57,7 +59,9 @@ const Signup = () => {
       })
         .then((res) => res.json())
         .then((res) => {
+      //    console.log(res,'res')
             setPic(res.url.toString())
+            setSignupdata.pic = pic
             setLoading(false)
         }).catch((err)=>{
             console.log(err,'error')
@@ -77,6 +81,7 @@ const Signup = () => {
   };
 
   const submitHandler = async() => {
+    
     setLoading(true)
     if(!signupdata.name || !signupdata.email || !signupdata.password || !signupdata.confirmpassword){
       toast({
@@ -107,7 +112,7 @@ const Signup = () => {
           "Content-type":"application/json",
         },
        }
-
+        console.log(signupdata,'signup')
        const {data} = await axios.post("http://localhost:4500/user/",signupdata,config)
        toast({
         title: "Registration Successfull",
