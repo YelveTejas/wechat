@@ -15,7 +15,7 @@ import Lottie from "react-lottie";
  
 import { IoMdArrowBack, IoMdSend } from "react-icons/io";
 import io from "socket.io-client";
-import { fullSender, getSender } from "../../config/Chatlogic";
+import { fullSender, getPic, getSender } from "../../config/Chatlogic";
 import ProfileModal from "../UIComponents/ProfileModal";
 import UpdateGroupChatModal from "../GroupChat/UpdateGroupChatModal";
 import axios from "axios";
@@ -179,7 +179,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
             {!selectedChat?.isGroupChat ? (
               <>
               <Flex alignItems={'center'} gap={3}>
-                <Avatar name={getSender(user,selectedChat.users)} size='sm'/>
+                <Avatar name={getSender(user,selectedChat.users)} size='sm' src={getPic(user,selectedChat.users)}/>
                 <Text fontSize={"22px"} fontWeight={"400"}>
                   {getSender(user, selectedChat?.users)}
                 </Text>
@@ -250,7 +250,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )}
-              <Flex alignItems={'center'} mx='20px' gap='20px' mb={1}>
+              <Flex alignItems={'center'} mx='10px' gap='10px' mb={1} mt={1}>
               <Input
               colorScheme="#38B2AC"
                 variant={"filled"}
