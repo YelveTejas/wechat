@@ -24,26 +24,27 @@ const ScrollableChat = ({ messages }) => {
                maxW={'60%'}
                h='auto'
                p='2px 5px'
-               bgColor={"white"}
+              
                borderRadius={'2xl'}
                mr='auto'
               mb={1}
+              bgColor={"#B9F5D0"}
                
               >
                 {
                   message.chat.isGroupChat ? (
                     <>
                       
-                       <Text textTransform={'capitalize'} fontSize={'16px'} color={'green'}>{message.sender.name}</Text>
+                       <Text textTransform={'lowercase'} fontSize={'14px'} color={'green'}>{message.sender.name}</Text>
                        <Flex   gap={2}  borderRadius={'2xl'}>
-                       <Text textAlign={'justify'} >{message.content}</Text>
+                       <Text>{message.content}</Text>
                         <Text alignSelf={'flex-end'} fontSize={'12px'}>{convertTimestampToTime(message?.updatedAt)}</Text>
                        </Flex>
                     </>
 
                   ):( 
                     <Flex gap={2}  >
-                   <Text textAlign={'justify'} >{message.content}</Text>
+                   <Text  >{message.content}</Text>
                    <Text alignSelf={'flex-end'} fontSize={'12px'}>{convertTimestampToTime(message?.updatedAt)}</Text>
                     </Flex>
                    

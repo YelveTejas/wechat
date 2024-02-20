@@ -10,6 +10,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { backendurl } from "../pages/Home";
 
 const signupData = {
   name: "",
@@ -24,7 +25,11 @@ const Signup = () => {
   const [show, setShow] = useState(false);
   const [signupdata, setSignupdata] = useState(signupData);
   const [pic, setPic] = useState('');
- 
+  const isValidEmail = (email) => {
+    // Regular expression for validating an Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
  // console.log(signupdata, "signupdata");
   const handleClick = () => {
     setShow((pre) => !pre);
@@ -102,6 +107,18 @@ const Signup = () => {
       setLoading(false);
       return;
     }
+    if (!isValidEmail(signupdata.email)) {
+      toast({
+        title: "Invalid Email Format",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      setLoading(false);
+      return;
+    }
+
     if (signupDataWithPic.password !== signupDataWithPic.confirmpassword) {
       setLoading(false);
       toast({
@@ -122,7 +139,7 @@ const Signup = () => {
       };
       console.log(signupDataWithPic, "signup");
       const { data } = await axios.post(
-        "http://localhost:4500/user/",
+        `${backendurl}user`,
         signupDataWithPic,
         config
       );
@@ -153,18 +170,18 @@ const Signup = () => {
       <FormControl isRequired>
         <FormLabel>Name</FormLabel>
         <Input
-          color={"white"}
+          
           name="name"
-          placeholder="Enter you name"
+          placeholder="Enter your name"
           onChange={(e) => getdata(e)}
         ></Input>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Email</FormLabel>
         <Input
-          color={"white"}
+          
           name="email"
-          placeholder="Enter youe email"
+          placeholder="Enter your email"
           onChange={(e) => getdata(e)}
         ></Input>
       </FormControl>
@@ -172,11 +189,11 @@ const Signup = () => {
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
-            color="white"
+            
             name="password"
             onChange={(e) => getdata(e)}
             type={show ? "text" : "password"}
-            placeholder="Enter you name"
+            placeholder="Enter your name"
           ></Input>
           <InputRightElement width={"4.5rem"}>
             <Button h="1.7rem" size="sm" onClick={handleClick}>
@@ -189,11 +206,11 @@ const Signup = () => {
         <FormLabel> Confirm Password</FormLabel>
         <InputGroup>
           <Input
-            color="white"
+            
             onChange={(e) => getdata(e)}
             name="confirmpassword"
             type={show ? "text" : "password"}
-            placeholder="Enter you name"
+            placeholder="Enter your name"
           ></Input>
           <InputRightElement width={"4.5rem"}>
             <Button h="1.7rem" size="sm" onClick={handleClick}>

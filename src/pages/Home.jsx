@@ -18,7 +18,7 @@ const Home = () => {
     const user = JSON.parse(localStorage.getItem("userInfo"))
   })
   return (
-    <Box bg='black' minH={'100vh'}>
+    <Box minH={'100vh'}>
     <Container maxW={"xl"} centerContent boxShadow={"md"}>
       <Box
         d="flex"
@@ -40,7 +40,7 @@ const Home = () => {
           Chit - Chat
         </Text>
       </Box>
-      <Box border='1px solid black' w="100%" p={{base:"10px",md:"4"}} borderRadius={"lg"} borderWidth={"1px"}>
+      <Box  w="100%" p={'10px'}  borderRadius={"lg"} borderWidth={"1px"}>
         <Tabs variant="soft-rounded">
           <TabList mb="1em">
             <Tab w="50%">Login</Tab>

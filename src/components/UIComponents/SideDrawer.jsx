@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Drawer,
@@ -52,7 +53,7 @@ const SideDrawer = () => {
     notification,
     setNotification,
   } = ChatState();
-
+ console.log(notification,'notification')
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     setUser();
@@ -154,7 +155,23 @@ const SideDrawer = () => {
         <Flex alignItems={"center"} gap={3}>
           <Menu>
             <MenuButton p={1}>
+              <Box> 
               <FaBell fontSize={"2xl"} margin={1} size="20px" color="white" />
+              {
+                notification.length>0 && (
+                  <Badge
+                  position="absolute"
+                  top='-1px'
+                  colorScheme="red"
+                  borderRadius="full"
+                >
+                  {notification.length}
+                </Badge>
+                )
+              }
+
+              </Box>
+            
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
@@ -167,7 +184,7 @@ const SideDrawer = () => {
                   }}
                 >
                   {e.chat.isGroupChat
-                    ? `New message in ${e.chat.chatName}`
+                    ? `New message in ${e.chat.ChatName}`
                     : `New Message from ${getSender(user, e.chat.users)}`}
                 </MenuItem>
               ))}

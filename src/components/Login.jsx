@@ -12,6 +12,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ChatState } from "../Context/ChatProvider";
+import { backendurl } from "../pages/Home";
+import { config } from "../config/token";
 const Login = () => {
   const {setUser} = ChatState()
   const navigate = useNavigate()
@@ -39,14 +41,15 @@ const Login = () => {
       return;
     }
     try {
-      const config = {
+     
+     const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
-
+    
       const { data } = await axios.post(
-        "http://localhost:4500/user/login",
+        `${backendurl}user/login`,
         { email, password },
         config
       );
@@ -64,7 +67,9 @@ const Login = () => {
       setLoading(false);
       navigate("/chat")
     } catch (error) {
-      console.log(error);
+     // console.log(error);
+      console.error(error)
+      console.error("Response data:", error.response.data);
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
@@ -82,7 +87,7 @@ const Login = () => {
         <FormLabel>Email</FormLabel>
         <Input
           name="email"
-          color={'white'}
+          
           placeholder="Enter youe email"
           onChange={(e) => setEmail(e.target.value)}
         ></Input>
@@ -93,8 +98,8 @@ const Login = () => {
           <Input
             name="password"
             type={show ? "text" : "password"}
-            placeholder="Enter you name"
-            color={'white'}
+            placeholder="Enter Password"
+            
             onChange={(e) => setPassword(e.target.value)}
           ></Input>
           <InputRightElement width={"4.5rem"}>

@@ -9,8 +9,8 @@ const ChatBox = ({fetchAgain,setFetchAgain}) => {
     <Box display={{base: selectedChat ? "flex" :"none",md:"flex"}}
     alignItems={'center'}
     flexDirection={'column'}
-    p={3}
-   
+    
+  
     w={{base:"100%",md:"74%"}}  
     borderRadius={'lg'}
     borderWidth={'1px'}

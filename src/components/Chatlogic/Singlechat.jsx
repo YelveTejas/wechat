@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Lottie from "react-lottie";
- 
+import bgImage from "../../assets/Default WhatsApp background for people who lost it_ Requested by u_Marvin_der_kuhle_.jpg"
 import { IoMdArrowBack, IoMdSend } from "react-icons/io";
 import io from "socket.io-client";
 import { fullSender, getPic, getSender } from "../../config/Chatlogic";
@@ -166,7 +166,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
     <>
       {selectedChat ? (
         <>
-          <Flex px={2} ali w="100%" alignItems={"center"} mb={2}>
+          <Flex p={2} ali w="100%" alignItems={"center"} >
             <Box>
             <IoMdArrowBack
               size="15px"
@@ -203,6 +203,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
             flexDirection={"column"}
             justifyContent={"flex-end"}
             bg="#E8E8E8"
+            bgImage={bgImage}
             w="100%"
             h="100%"
             borderRadius={"lg"}
@@ -220,6 +221,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               <Flex
               flexDirection="column"
               overflowY="scroll"
+              
               className="no-scroll" // Apply 'no-scroll' class to disable default Chakra UI scrollbar styling
               css={{
                 '&::-webkit-scrollbar': {
