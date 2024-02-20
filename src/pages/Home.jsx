@@ -8,15 +8,21 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
-
+ export const backendurl = 'http://localhost:4500/'
 const Home = () => {
+
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("userInfo"))
+  })
   return (
+    <Box bg='black' minH={'100vh'}>
     <Container maxW={"xl"} centerContent boxShadow={"md"}>
       <Box
         d="flex"
+      
         w="100%"
         justifyContent={"center"}
         p={"3"}
@@ -31,10 +37,10 @@ const Home = () => {
           textAlign={"center"}
         
         >
-          Connet With Your Loved Ones
+          Chit - Chat
         </Text>
       </Box>
-      <Box w="100%" p={{base:"10px",md:"4"}} borderRadius={"lg"} borderWidth={"1px"}>
+      <Box border='1px solid black' w="100%" p={{base:"10px",md:"4"}} borderRadius={"lg"} borderWidth={"1px"}>
         <Tabs variant="soft-rounded">
           <TabList mb="1em">
             <Tab w="50%">Login</Tab>
@@ -51,6 +57,7 @@ const Home = () => {
         </Tabs>
       </Box>
     </Container>
+    </Box>
   );
 };
 

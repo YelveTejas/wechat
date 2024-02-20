@@ -40,16 +40,23 @@ const SideDrawer = () => {
   const navigate = useNavigate();
   const { onOpen, isOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState("");
-  const {setUser} = ChatState()
+  const { setUser } = ChatState();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [chatloading, setChatloading] = useState(false);
-  const { user, setSelectedChat, chats, setChats,notification,setNotification } = ChatState();
- 
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
+
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
-    setUser()
-    setSelectedChat('')
+    setUser();
+    setSelectedChat("");
     navigate("/");
   };
   const handleSearch = async () => {
@@ -66,7 +73,7 @@ const SideDrawer = () => {
 
     try {
       setLoading(true);
-       config = {
+      config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -99,7 +106,10 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.post(
-        `${backendurl}chat`,{ userId }, config);
+        `${backendurl}chat`,
+        { userId },
+        config
+      );
       if (!chats.find((e) => e._id === data._id)) setChats([data, ...chats]); //this is to find out that if your user already have chat connection.
       setChatloading(false);
       setSelectedChat(data);
@@ -119,44 +129,52 @@ const SideDrawer = () => {
   return (
     <>
       <Flex
-      
         justifyContent={"space-between"}
         alignItems={"center"}
         bg="#38B2AC"
         w="100%"
         p="5px 30px"
-        
       >
         <Tooltip label="Search User to Chat" hasArrow placement="bottom-end">
           <Button variant={"ghost"} onClick={onOpen}>
-            <FaSearch />
-            <Text display={{ base: "none", md: "flex" }} px="4">
+            <FaSearch color="white" />
+            <Text display={{ base: "none", md: "flex" }} px="4" color="white">
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize={"22px"} fontWeight={'600'} color={'white'} fontFamily={'sans-serif'}>Chit-Chat</Text>
-        <Flex alignItems={'center'} gap={3}>
+        <Text
+          fontSize={"22px"}
+          fontWeight={"600"}
+          color={"white"}
+          fontFamily={"sans-serif"}
+        >
+          Chit-Chat
+        </Text>
+        <Flex alignItems={"center"} gap={3}>
           <Menu>
             <MenuButton p={1}>
-              <FaBell fontSize={"2xl"} margin={1} size='20px' />
+              <FaBell fontSize={"2xl"} margin={1} size="20px" color="white" />
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
-              {notification.map((e)=>
-              <MenuItem key={e._id} onClick={()=>{
-                setSelectedChat(e.chat)
-                setNotification(notification.filter((n)=>n!==e))
-              }}>
-                {e.chat.isGroupChat ?`New message in ${e.chat.chatName}`:`New Message from ${getSender(user,e.chat.users)}` }
-              </MenuItem>
-              )}
+              {notification.map((e) => (
+                <MenuItem
+                  key={e._id}
+                  onClick={() => {
+                    setSelectedChat(e.chat);
+                    setNotification(notification.filter((n) => n !== e));
+                  }}
+                >
+                  {e.chat.isGroupChat
+                    ? `New message in ${e.chat.chatName}`
+                    : `New Message from ${getSender(user, e.chat.users)}`}
+                </MenuItem>
+              ))}
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton
-              
-            >
+            <MenuButton>
               <Avatar
                 size="sm"
                 cursor={"pointer"}

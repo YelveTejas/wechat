@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import ScrollableFeed from "react-scrollable-feed";
+
 import { ChatState } from "../../Context/ChatProvider";
 import { convertTimestampToTime } from "../../config/Chatlogic";
 

@@ -9,31 +9,29 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import axios from 'axios'
+import axios from "axios";
 
 const signupData = {
   name: "",
   email: "",
   password: "",
-  confirmpassword: "",
-  pic:""
+  confirmpassword: ""
+ 
 };
 const Signup = () => {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [signupdata, setSignupdata] = useState(signupData);
-  const [pic, setPic] = useState();
+  const [pic, setPic] = useState('');
  
+ // console.log(signupdata, "signupdata");
   const handleClick = () => {
     setShow((pre) => !pre);
   };
-  const getdata=(e)=>{
-    setSignupdata({...signupdata,[e.target.name]:e.target.value})
-
-  }
-
-
+  const getdata = (e) => {
+    setSignupdata({ ...signupdata, [e.target.name]: e.target.value });
+  };
 
   const postDetail = (pic) => {
     setLoading(true);
@@ -59,43 +57,53 @@ const Signup = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-      //    console.log(res,'res')
-            setPic(res.url.toString())
-            setSignupdata.pic = pic
-            setLoading(false)
-        }).catch((err)=>{
-            console.log(err,'error')
-            setLoading(false)
+          //    console.log(res,'res')
+          setPic(res.url.toString());
+        
+          setLoading(false);
         })
-    }else{
-        toast({
-            title: "Please Select an Image",
-            status: "info",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-          setLoading(false)
-          return
+        .catch((err) => {
+          console.log(err, "error");
+          setLoading(false);
+        });
+    } else {
+      toast({
+        title: "Please Select an Image",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
     }
   };
 
-  const submitHandler = async() => {
-    
-    setLoading(true)
-    if(!signupdata.name || !signupdata.email || !signupdata.password || !signupdata.confirmpassword){
+  const submitHandler = async () => {
+    const signupDataWithPic = {
+      ...signupdata,
+      pic: pic,
+    };
+    console.log(signupDataWithPic,'pic')
+    setLoading(true);
+    if (
+      !signupDataWithPic.name ||
+      !signupDataWithPic.email ||
+      !signupDataWithPic.password ||
+      !signupDataWithPic.confirmpassword
+    ) {
       toast({
         title: "Please Provide All the Details",
-        position:'top',
+        position: "top",
         status: "info",
         duration: 5000,
         isClosable: true,
       });
-      setLoading(false)
-      return
+      setLoading(false);
+      return;
     }
-    if(signupdata.password !== signupdata.confirmpassword){
-      setLoading(false)
+    if (signupDataWithPic.password !== signupDataWithPic.confirmpassword) {
+      setLoading(false);
       toast({
         title: "Password does not match",
         status: "error",
@@ -103,57 +111,70 @@ const Signup = () => {
         isClosable: true,
         position: "bottom",
       });
-      
-      return 
+
+      return;
     }
-    try{
-       const config = {
-        headers :{
-          "Content-type":"application/json",
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
         },
-       }
-        console.log(signupdata,'signup')
-       const {data} = await axios.post("http://localhost:4500/user/",signupdata,config)
-       toast({
+      };
+      console.log(signupDataWithPic, "signup");
+      const { data } = await axios.post(
+        "http://localhost:4500/user/",
+        signupDataWithPic,
+        config
+      );
+      toast({
         title: "Registration Successfull",
         status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem('userInfo',JSON.stringify(data))
-      setLoading(false)
-     
-    }catch(error){
-      console.log(error)
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
       toast({
         title: "Error Occured!",
-        description:error.response.data.message,
+        description: error.response.data.message,
         status: "error",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false)
-    }  
+      setLoading(false);
+    }
   };
   return (
     <VStack spacing={"5PX"}>
       <FormControl isRequired>
         <FormLabel>Name</FormLabel>
-        <Input color={'white'} name="name" placeholder="Enter you name" onChange={(e)=>getdata(e)}></Input>
+        <Input
+          color={"white"}
+          name="name"
+          placeholder="Enter you name"
+          onChange={(e) => getdata(e)}
+        ></Input>
       </FormControl>
       <FormControl isRequired>
         <FormLabel>Email</FormLabel>
-        <Input color={'white'} name="email" placeholder="Enter youe email" onChange={(e)=>getdata(e)}></Input>
+        <Input
+          color={"white"}
+          name="email"
+          placeholder="Enter youe email"
+          onChange={(e) => getdata(e)}
+        ></Input>
       </FormControl>
       <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
-            color='white'
+            color="white"
             name="password"
-            onChange={(e)=>getdata(e)}
+            onChange={(e) => getdata(e)}
             type={show ? "text" : "password"}
             placeholder="Enter you name"
           ></Input>
@@ -168,8 +189,8 @@ const Signup = () => {
         <FormLabel> Confirm Password</FormLabel>
         <InputGroup>
           <Input
-          color='white'
-          onChange={(e)=>getdata(e)}
+            color="white"
+            onChange={(e) => getdata(e)}
             name="confirmpassword"
             type={show ? "text" : "password"}
             placeholder="Enter you name"
@@ -190,7 +211,13 @@ const Signup = () => {
           accept="image/*"
         ></Input>
       </FormControl>
-      <Button color="blue" width="100%" mt={15} onClick={submitHandler} isLoading={loading}>
+      <Button
+        color="blue"
+        width="100%"
+        mt={15}
+        onClick={submitHandler}
+        isLoading={loading}
+      >
         Sign Up
       </Button>
     </VStack>

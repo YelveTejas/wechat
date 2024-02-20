@@ -27,8 +27,7 @@ var socket, selectedChatCompare;
 
 const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
-  const { user, selectedChat, setSelectedChat, notification, setNotification } =
-    ChatState();
+  const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
   const [newMessage, setnewMessage] = useState("");
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
