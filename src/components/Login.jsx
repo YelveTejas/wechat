@@ -88,7 +88,7 @@ const Login = () => {
         <Input
           name="email"
           
-          placeholder="Enter youe email"
+          placeholder="Enter Email"
           onChange={(e) => setEmail(e.target.value)}
         ></Input>
       </FormControl>

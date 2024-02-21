@@ -53,7 +53,7 @@ const SideDrawer = () => {
     notification,
     setNotification,
   } = ChatState();
- console.log(notification,'notification')
+ //console.log(notification,'notification')
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     setUser();
@@ -150,19 +150,19 @@ const SideDrawer = () => {
           color={"white"}
           fontFamily={"sans-serif"}
         >
-          Chit-Chat
+        WECHAT
         </Text>
         <Flex alignItems={"center"} gap={3}>
           <Menu>
             <MenuButton p={1}>
               <Box> 
-              <FaBell fontSize={"2xl"} margin={1} size="20px" color="white" />
+              <FaBell fontSize={"2xl"} margin={1} size="16px" color="white" />
               {
                 notification.length>0 && (
                   <Badge
                   position="absolute"
                   top='-1px'
-                  colorScheme="red"
+                  colorScheme="blue"
                   borderRadius="full"
                 >
                   {notification.length}

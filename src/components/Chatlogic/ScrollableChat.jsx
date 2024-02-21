@@ -35,7 +35,7 @@ const ScrollableChat = ({ messages }) => {
                   message.chat.isGroupChat ? (
                     <>
                       
-                       <Text textTransform={'lowercase'} fontSize={'14px'} color={'green'}>{message.sender.name}</Text>
+                       <Text textTransform={'lowercase'} fontSize={'14px'} color={'black'}>{message.sender.name}</Text>
                        <Flex   gap={2}  borderRadius={'2xl'}>
                        <Text>{message.content}</Text>
                         <Text alignSelf={'flex-end'} fontSize={'12px'}>{convertTimestampToTime(message?.updatedAt)}</Text>

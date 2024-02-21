@@ -11,7 +11,7 @@ import {
 import React, { useEffect } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
- export const backendurl = 'http://localhost:4500/'
+ export const backendurl = 'https://wechat-backend-fob0.onrender.com/'
 const Home = () => {
 
   useEffect(()=>{
@@ -37,7 +37,7 @@ const Home = () => {
           textAlign={"center"}
         
         >
-          Chit - Chat
+          WECHAT
         </Text>
       </Box>
       <Box  w="100%" p={'10px'}  borderRadius={"lg"} borderWidth={"1px"}>
