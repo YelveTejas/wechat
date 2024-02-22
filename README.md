@@ -2,7 +2,7 @@
 <P>The real-time chat application has been developed with user-friendly features, enabling seamless one-on-one conversations and group discussions. Notably, a group chat functionality is in place, exclusively administered by designated personnel with the authority to manage users. This ensures a secure and organized environment. Additionally, a typing indicator has been implemented to provide real-time feedback during conversations. These enhancements collectively contribute to a professional and dynamic chat experience for users.
 </P>
 
-<h3>D Demo <a href='https://chatspehre.netlify.app/'>Click here</a></h3>
+<h3> Demo <a href='https://chatspehre.netlify.app/'>Click here</a></h3>
 
 <h2>Tech Stack</h2>
 <div>
@@ -24,7 +24,7 @@
     <li>notifications</li>
     <li>Realtime chatting</li>
     <Li>Group chatting</Li>
-     <li>Relationship/li>
+     <li>Relationship</li>
      <li>Search</li>
      <li>Responsive</li>
      <li>Dynaminc Routing</li>
