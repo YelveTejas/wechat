@@ -21,7 +21,7 @@
 <h2>Features</h2>
   <ul>
     <li>Authentication</li>
-    <li>notifications</li>
+    <li>Notifications</li>
     <li>Realtime chatting</li>
     <Li>Group chatting</Li>
      <li>Relationship</li>
