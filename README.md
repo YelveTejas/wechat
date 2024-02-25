@@ -31,7 +31,7 @@
     
     
   </ul>
-  <h3>Here are few shost of the project</h3>
+  <h3>Here are few shots of the project</h3>
   <div>
   <img src='https://github.com/YelveTejas/wechat/assets/103955930/b640a727-b62d-4d8d-a516-59aff21af387' alt='tejas'></img>
    <img src='https://github.com/YelveTejas/wechat/assets/103955930/3d43e417-21a3-4d69-9048-d3b398d37c56' alt='tejas'></img>
