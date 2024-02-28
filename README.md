@@ -1,4 +1,4 @@
-<h1>Blog App</h1>
+<h1>WeChat</h1>
 <P>The real-time chat application has been developed with user-friendly features, enabling seamless one-on-one conversations and group discussions. Notably, a group chat functionality is in place, exclusively administered by designated personnel with the authority to manage users. This ensures a secure and organized environment. Additionally, a typing indicator has been implemented to provide real-time feedback during conversations. These enhancements collectively contribute to a professional and dynamic chat experience for users.
 </P>
 
