@@ -101,7 +101,7 @@ const GroupChatModal = ({children}) => {
    setSelectedUsers(selectedUsers.filter(e=>e._id !== deleteUser._id))
   }
   const handleGroup=(userToAdd)=>{
-    console.log(userToAdd,'usertToAdd')  //function is for adding members to selected group
+   // console.log(userToAdd,'usertToAdd')  //function is for adding members to selected group
     if(selectedUsers.includes(userToAdd)){
       toast({
         title: "User Already Added",

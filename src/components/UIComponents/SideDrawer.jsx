@@ -80,12 +80,14 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.get(
-        `http://localhost:4500/user?search=${search}`,
+        `${backendurl}user?search=${search}`,
         config
       );
       setLoading(false);
+    
       setSearchResults(data);
     } catch (error) {
+     // console.log(error)
       setLoading(false);
       toast({
         title: "Error Occred",

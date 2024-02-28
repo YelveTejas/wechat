@@ -51,7 +51,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   }, []);
 
   const sendMessage = async (e) => {
-    console.log('e')
+   // console.log('e')
     if (newMessage) {
       socket.emit("stop typing", selectedChat._id);
       setnewMessage(e.target.value); ///typing indicator message
@@ -166,7 +166,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
     <>
       {selectedChat ? (
         <>
-          <Flex p={2} ali w="100%" alignItems={"center"} >
+          <Flex p={2} ali w="100%" alignItems={"center"}>
             <Box>
             <IoMdArrowBack
               size="15px"
@@ -205,7 +205,8 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
             bg="#E8E8E8"
             bgImage={bgImage}
             w="100%"
-            h="100%"
+            h={{base:"85%",md:"100%"}}
+            
             borderRadius={"lg"}
             overflowY={"hidden"}
           >

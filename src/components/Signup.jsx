@@ -46,7 +46,7 @@ const Signup = () => {
         status: "info",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top-right",
       });
 
       return;
@@ -68,7 +68,7 @@ const Signup = () => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err, "error");
+       //   console.log(err, "error");
           setLoading(false);
         });
     } else {
@@ -77,7 +77,7 @@ const Signup = () => {
         status: "info",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top-right",
       });
       setLoading(false);
       return;
@@ -89,7 +89,7 @@ const Signup = () => {
       ...signupdata,
       pic: pic,
     };
-    console.log(signupDataWithPic,'pic')
+  //  console.log(signupDataWithPic,'pic')
     setLoading(true);
     if (
       !signupDataWithPic.name ||
@@ -99,7 +99,7 @@ const Signup = () => {
     ) {
       toast({
         title: "Please Provide All the Details",
-        position: "top",
+        position: "top-right",
         status: "info",
         duration: 5000,
         isClosable: true,
@@ -126,7 +126,19 @@ const Signup = () => {
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top-right",
+      });
+
+      return;
+    }
+    if (!signupDataWithPic.pic) {
+      setLoading(false);
+      toast({
+        title: "Please Upload Picture",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
       });
 
       return;
@@ -137,7 +149,7 @@ const Signup = () => {
           "Content-type": "application/json",
         },
       };
-      console.log(signupDataWithPic, "signup");
+    //  console.log(signupDataWithPic, "signup");
       const { data } = await axios.post(
         `${backendurl}user`,
         signupDataWithPic,
@@ -148,19 +160,19 @@ const Signup = () => {
         status: "success",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top-right",
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top-right",
       });
       setLoading(false);
     }
@@ -193,7 +205,7 @@ const Signup = () => {
             name="password"
             onChange={(e) => getdata(e)}
             type={show ? "text" : "password"}
-            placeholder="Enter your name"
+            placeholder="Enter your password"
           ></Input>
           <InputRightElement width={"4.5rem"}>
             <Button h="1.7rem" size="sm" onClick={handleClick}>
@@ -210,7 +222,7 @@ const Signup = () => {
             onChange={(e) => getdata(e)}
             name="confirmpassword"
             type={show ? "text" : "password"}
-            placeholder="Enter your name"
+            placeholder="Confirm your password"
           ></Input>
           <InputRightElement width={"4.5rem"}>
             <Button h="1.7rem" size="sm" onClick={handleClick}>
@@ -219,7 +231,7 @@ const Signup = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <FormControl>
+      <FormControl  isRequired>
         <FormLabel>Upload your Picture</FormLabel>
         <Input
           type="file"
