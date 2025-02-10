@@ -22,7 +22,7 @@ import axios from "axios";
 import { backendurl } from "../../pages/Home";
 import ScrollableChat from "./ScrollableChat";
 import animationData from "../animations/typing.json";
-const ENDPOINT = "http://localhost:4500";
+const ENDPOINT = "https://wechat-backend-fob0.onrender.com";
 var socket, selectedChatCompare;
 
 const Singlechat = ({ fetchAgain, setFetchAgain }) => {
