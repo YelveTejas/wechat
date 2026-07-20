@@ -12,17 +12,16 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Lottie from "react-lottie";
+import api, { backendurl } from "../../config/axios";
 import bgImage from "../../assets/Default WhatsApp background for people who lost it_ Requested by u_Marvin_der_kuhle_.jpg"
 import { IoMdArrowBack, IoMdSend } from "react-icons/io";
 import io from "socket.io-client";
 import { fullSender, getPic, getSender } from "../../config/Chatlogic";
 import ProfileModal from "../UIComponents/ProfileModal";
 import UpdateGroupChatModal from "../GroupChat/UpdateGroupChatModal";
-import axios from "axios";
-import { backendurl } from "../../pages/Home";
 import ScrollableChat from "./ScrollableChat";
 import animationData from "../animations/typing.json";
-const ENDPOINT = "https://wechat-backend-fob0.onrender.com";
+const ENDPOINT = backendurl;
 var socket, selectedChatCompare;
 
 const Singlechat = ({ fetchAgain, setFetchAgain }) => {
@@ -56,22 +55,11 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
       socket.emit("stop typing", selectedChat._id);
       setnewMessage(e.target.value); ///typing indicator message
       try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
         setnewMessage("");
-        const { data } = await axios.post(
-          `${backendurl}message`,
-          {
-            content: newMessage,
-            chatId: selectedChat._id,
-          },
-          config
-        );
-       // console.log(data, "data");
+        const { data } = await api.post("message", {
+          content: newMessage,
+          chatId: selectedChat._id,
+        });
         socket.emit("new message", data);
         setallMessage([...allMessage, data]);
       } catch (error) {
@@ -94,17 +82,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
 
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      //  console.log(selectedChat,'selectedChat')
-      const { data } = await axios.get(
-        `${backendurl}message/${selectedChat._id}`,
-        config
-      );
-      //   console.log(data,'data')
+      const { data } = await api.get(`message/${selectedChat._id}`);
       setallMessage(data);
       socket.emit("join chat", selectedChat._id);
       setLoading(false);
@@ -161,7 +139,8 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
       }
     }, timerLength);
   };
-
+  console.log(user,'user')
+  console.log(selectedChat,'selectedChat')
   return (
     <>
       {selectedChat ? (
@@ -180,7 +159,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               <Flex alignItems={'center'} gap={3}>
                 <Avatar name={getSender(user,selectedChat.users)} size='sm' src={getPic(user,selectedChat.users)}/>
                 <Text fontSize={"22px"} fontWeight={"400"}>
-                  {getSender(user, selectedChat?.users)}
+                  {selectedChat?.users[1]?.name}
                 </Text>
                 </Flex>
                 <ProfileModal user={fullSender(user, selectedChat?.users)} />

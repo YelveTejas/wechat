@@ -9,11 +9,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ChatState } from "../Context/ChatProvider";
-import { backendurl } from "../pages/Home";
-import { config } from "../config/token";
+import api, { setAccessToken } from "../config/axios";
 const Login = () => {
   const { setUser } = ChatState();
   const navigate = useNavigate();
@@ -40,17 +38,7 @@ const Login = () => {
       return;
     }
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      const { data } = await axios.post(
-        `${backendurl}user/login`,
-        { email, password },
-        config
-      );
+      const { data } = await api.post("/user/login", { email, password });
       setLoading(false);
       toast({
         title: "Login Successfull",
@@ -60,8 +48,9 @@ const Login = () => {
         isClosable: true,
       });
 
-      setUser(data);
+      setAccessToken(data.token);
       localStorage.setItem("userInfo", JSON.stringify(data));
+      setUser(data);
       setLoading(false);
       navigate("/chat");
     } catch (error) {
@@ -70,7 +59,7 @@ const Login = () => {
     //  console.error("Response data:", error.response.data);
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
+        description: error?.response?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,

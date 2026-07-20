@@ -11,7 +11,7 @@ import {
 import React, { useEffect } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
- export const backendurl = 'https://wechat-backend-fob0.onrender.com/'
+export { backendurl } from "../config/axios";
 const Home = () => {
 
   useEffect(()=>{

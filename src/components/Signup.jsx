@@ -9,8 +9,7 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import axios from "axios";
-import { backendurl } from "../pages/Home";
+import api from "../config/axios";
 
 const signupData = {
   name: "",
@@ -144,17 +143,7 @@ const Signup = () => {
       return;
     }
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-    //  console.log(signupDataWithPic, "signup");
-      const { data } = await axios.post(
-        `${backendurl}user`,
-        signupDataWithPic,
-        config
-      );
+      const { data } = await api.post("/user", signupDataWithPic);
       toast({
         title: "Registration Successfull",
         status: "success",
@@ -162,7 +151,7 @@ const Signup = () => {
         isClosable: true,
         position: "top-right",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      // localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
     } catch (error) {
       //console.log(error);

@@ -18,6 +18,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import Chatloading from "./Chatloading";
 import { getPic, getSender } from "../../config/Chatlogic";
 import GroupChatModal from "../GroupChat/GroupChatModal";
+import api from "../../config/axios";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -32,7 +33,7 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get(`${backendurl}chat`, config);
+      const { data } = await api.get('chat');
       setChats(data);
     } catch (error) {
       toast({
@@ -51,6 +52,8 @@ const MyChats = ({ fetchAgain }) => {
     fetchChats();
   }, [fetchAgain]);
   // console.log(loggedUser,'loggeduser')
+  console.log(chats,'chats')
+  console.log(loggedUser,'loggeduser')
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}

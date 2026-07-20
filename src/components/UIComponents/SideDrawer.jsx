@@ -21,7 +21,6 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import axios from "axios";
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
@@ -31,10 +30,11 @@ import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
 import Chatloading from "./Chatloading";
 import Userslist from "./Userslist";
-import { backendurl, url } from "../../pages/Home";
 import { config } from "../../config/token";
 //import {NotificationBadge} from 'react-no'
 import { getSender } from "../../config/Chatlogic";
+
+import api, { setAccessToken } from "../../config/axios";
 
 const SideDrawer = () => {
   const toast = useToast();
@@ -55,9 +55,10 @@ const SideDrawer = () => {
   } = ChatState();
  //console.log(notification,'notification')
   const logoutHandler = () => {
+    api.post("/user/logout").catch(() => {});
+    setAccessToken(null);
+    setUser(undefined);
     localStorage.removeItem("userInfo");
-    setUser();
-    setSelectedChat("");
     navigate("/");
   };
   const handleSearch = async () => {
@@ -74,13 +75,9 @@ const SideDrawer = () => {
 
     try {
       setLoading(true);
-      config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get(
-        `${backendurl}user?search=${search}`,
+    
+      const { data } = await api.get(
+        `user?search=${search}`,
         config
       );
       setLoading(false);
@@ -102,14 +99,8 @@ const SideDrawer = () => {
   const accessChat = async (userId) => {
     try {
       setChatloading(true);
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(
-        `${backendurl}chat`,
+      const { data } = await api.post(
+        `chat`,
         { userId },
         config
       );
