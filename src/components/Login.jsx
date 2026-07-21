@@ -49,17 +49,15 @@ const Login = () => {
       });
 
       setAccessToken(data.token);
+      console.log(data, "data");
       localStorage.setItem("userInfo", JSON.stringify(data));
       setUser(data);
       setLoading(false);
       navigate("/chat");
     } catch (error) {
-      // console.log(error);
-   //   console.error(error);
-    //  console.error("Response data:", error.response.data);
       toast({
         title: "Error Occured!",
-        description: error?.response?.data?.message,
+        description: error?.response?.data?.message || "Something went wrong. Please try again.",
         status: "error",
         duration: 3000,
         isClosable: true,

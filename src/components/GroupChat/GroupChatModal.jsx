@@ -10,8 +10,7 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { ChatState } from '../../Context/ChatProvider'
-import axios from 'axios'
-import { backendurl } from '../../pages/Home'
+import api from '../../config/axios'
 import Userslist from '../UIComponents/Userslist'
 import UserBadge from './UserBadge'
 const GroupChatModal = ({children}) => {
@@ -31,13 +30,7 @@ const GroupChatModal = ({children}) => {
     }
     try{
    setLoading(true)
-   const config = {
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-    },
-  };
-  const {data} = await axios.get(`${backendurl}user?search=${searchUsers}`,config)
-  //  console.log(data)
+  const {data} = await api.get(`user?search=${searchUsers}`)
     setLoading(false)
     setSearchResults(data)
     }catch(error){
@@ -65,16 +58,10 @@ const GroupChatModal = ({children}) => {
     }
 
     try{
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
-      const {data} = await axios.post(`${backendurl}chat/group`,{
+      const {data} = await api.post('chat/group',{
         name:groupChatName,
         users:JSON.stringify(selectedUsers.map(e=>e._id))
-      },config)
+      })
 
       setChats([data,...chats])
       onClose()
@@ -96,12 +83,10 @@ const GroupChatModal = ({children}) => {
       });
     }
   }
-  const handleFunction=()=>{}
   const handleDelete=(deleteUser)=>{
    setSelectedUsers(selectedUsers.filter(e=>e._id !== deleteUser._id))
   }
-  const handleGroup=(userToAdd)=>{
-   // console.log(userToAdd,'usertToAdd')  //function is for adding members to selected group
+  const handleGroup=(userToAdd)=>{ //function is for adding members to selected group
     if(selectedUsers.includes(userToAdd)){
       toast({
         title: "User Already Added",
@@ -129,7 +114,7 @@ const GroupChatModal = ({children}) => {
             <Input placeholder='Group Name' mb={3} onChange={(e)=>setGroupChatName(e.target.value)}></Input>
            </FormControl>
            <FormControl>
-            <Input placeholder='Add User to Group' mb={3} onChange={(e)=>handleSearch(e.target.value)} handleFunction={()=>handleGroup(user)}></Input>
+            <Input placeholder='Add User to Group' mb={3} onChange={(e)=>handleSearch(e.target.value)}></Input>
            </FormControl>
            <Flex>
            {selectedUsers.map(e=>(

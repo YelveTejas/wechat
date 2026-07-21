@@ -23,8 +23,7 @@ import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { ChatState } from "../../Context/ChatProvider";
 import UserBadge from "./UserBadge";
-import axios from "axios";
-import { backendurl } from "../../pages/Home";
+import api from "../../config/axios";
 import Userslist from "../UIComponents/Userslist";
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) => {
@@ -37,7 +36,6 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
   const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { selectedChat, setSelectedChat, user } = ChatState();
- // console.log(selectedChat, "selectedCHAT");
   const handleRename = async () => {
     if (!renameGroupChat) {
       return;
@@ -45,24 +43,14 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
 
     try {
       setRenameLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.put(
-        `${backendurl}chat/rename`,
-        {
-          chatId: selectedChat._id,
-          ChatName: renameGroupChat,
-        },
-        config
-      );
+      const { data } = await api.put("chat/rename", {
+        chatId: selectedChat._id,
+        ChatName: renameGroupChat,
+      });
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       setRenameLoading(false);
     } catch (error) {
-     // console.log(error, "error");
       toast({
         title: "Error Occred",
         description: error.message,
@@ -94,22 +82,12 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
     }
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+      const { data } = await api.put("chat/remove", {
+        chatId: selectedChat._id,
+        userId: usertoRemove._id,
+      });
 
-      const { data } = await axios.put(
-        `${backendurl}chat/remove`,
-        {
-          chatId: selectedChat._id,
-          userId: usertoRemove._id,
-        },
-        config
-      );
-
-      usertoRemove._id === user._id ? selectedChat() : setSelectedChat(data);
+      usertoRemove._id === user._id ? setSelectedChat("") : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       fetchAllMessages()
       setLoading(false);
@@ -130,16 +108,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
     }
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get(
-        `${backendurl}user?search=${searchUsers}`,
-        config
-      );
-      //    console.log(data,'iusers')
+      const { data } = await api.get(`user?search=${searchUsers}`);
       setLoading(false);
       setSearchResults(data);
     } catch (error) {
@@ -155,7 +124,6 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
   };
 
   const addMemberstoGroup = async (userToAdd) => {
-   // console.log(userToAdd);
     if (selectedChat.users.find((e) => e._id === userToAdd._id)) {
       toast({
         title: "User Already added in the group",
@@ -182,20 +150,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
 
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
-      const { data } = await axios.put(
-        `${backendurl}chat/add`,
-        {
-          chatId: selectedChat._id,
-          userId: userToAdd._id,
-        },
-        config
-      );
+      const { data } = await api.put("chat/add", {
+        chatId: selectedChat._id,
+        userId: userToAdd._id,
+      });
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       setLoading(false);
