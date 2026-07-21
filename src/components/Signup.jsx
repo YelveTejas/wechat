@@ -224,7 +224,7 @@ const Signup = () => {
         ></Input>
       </FormControl>
       <Button
-        color="blue"
+        colorScheme="whatsapp"
         width="100%"
         mt={15}
         onClick={submitHandler}

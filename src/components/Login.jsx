@@ -93,7 +93,7 @@ const Login = () => {
         </InputGroup>
       </FormControl>
       <Button
-        color="blue"
+        colorScheme="whatsapp"
         width="100%"
         mt={15}
         isLoading={loading}

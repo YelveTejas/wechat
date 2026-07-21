@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const backendurl = 'http://localhost:4500/' || 'https://wechat-backend-fob0.onrender.com/'
+export const backendurl = process.env.REACT_APP_BACKEND_URL || 'https://wechat-backend-fob0.onrender.com/'
 
 const api = axios.create({
   baseURL: backendurl,

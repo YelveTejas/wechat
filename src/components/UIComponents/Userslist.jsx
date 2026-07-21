@@ -6,13 +6,13 @@ const Userslist = ({handleFunction,user}) => {
 
 
   return (
-    <Box 
+    <Box
     onClick={handleFunction}
     cursor={'pointer'}
-    bg="#E8E8E8"
-   
+    bg="gray.50"
+
     _hover={{
-        background:"#38B2AC",
+        background:"whatsapp.700",
         color:"white"
     }}
     w='100%'

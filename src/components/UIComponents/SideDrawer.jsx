@@ -116,12 +116,12 @@ const SideDrawer = () => {
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}
-        bg="#38B2AC"
+        bg="whatsapp.700"
         w="100%"
         p="5px 30px"
       >
         <Tooltip label="Search User to Chat" hasArrow placement="bottom-end">
-          <Button variant={"ghost"} onClick={onOpen}>
+          <Button variant={"ghost"} color="white" _hover={{ bg: "whatsapp.600" }} onClick={onOpen}>
             <FaSearch color="white" />
             <Text display={{ base: "none", md: "flex" }} px="4" color="white">
               Search User
@@ -139,14 +139,15 @@ const SideDrawer = () => {
         <Flex alignItems={"center"} gap={3}>
           <Menu>
             <MenuButton p={1}>
-              <Box> 
+              <Box>
               <FaBell fontSize={"2xl"} margin={1} size="16px" color="white" />
               {
                 notification.length>0 && (
                   <Badge
                   position="absolute"
                   top='-1px'
-                  colorScheme="blue"
+                  bg="whatsapp.400"
+                  color="white"
                   borderRadius="full"
                 >
                   {notification.length}
@@ -195,7 +196,7 @@ const SideDrawer = () => {
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay>
           <DrawerContent>
-            <DrawerHeader>Search Users</DrawerHeader>
+            <DrawerHeader borderBottom="1px solid" borderColor="gray.100">Search Users</DrawerHeader>
             <DrawerBody>
               <Flex pb={2}>
                 <Input
@@ -204,7 +205,7 @@ const SideDrawer = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 ></Input>
-                <Button onClick={handleSearch}>Go</Button>
+                <Button colorScheme="whatsapp" onClick={handleSearch}>Go</Button>
               </Flex>
               {loading ? (
                 <Chatloading></Chatloading>

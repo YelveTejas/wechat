@@ -28,7 +28,6 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
   const [newMessage, setnewMessage] = useState("");
-  const userData = JSON.parse(localStorage.getItem("userInfo"));
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [allMessage, setallMessage] = useState([]);
@@ -138,16 +137,23 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
       }
     }, timerLength);
   };
-  console.log(selectedChat, "chats");
-  console.log(userData,'user')
   return (
     <>
       {selectedChat ? (
         <>
-          <Flex p={2} ali w="100%" alignItems={"center"}>
-            <Box>
+          <Flex
+            p={3}
+            w="100%"
+            alignItems={"center"}
+            bg="white"
+            color="gray.800"
+            borderBottom="1px solid"
+            borderColor="gray.100"
+            borderTopRadius={"lg"}
+          >
+            <Box color="whatsapp.700">
             <IoMdArrowBack
-              size="15px"
+              size="20px"
               cursor={"pointer"}
               onClick={() => setSelectedChat("")}
             />
@@ -157,7 +163,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               <>
               <Flex alignItems={'center'} gap={3}>
                 <Avatar name={getSender(user,selectedChat.users)} size='sm' src={getPic(user,selectedChat.users)}/>
-                <Text fontSize={"22px"} fontWeight={"400"}>
+                <Text fontSize={"18px"} fontWeight={"500"}>
                   {getSender(user, selectedChat.users).toUpperCase()}
                 </Text>
                 </Flex>
@@ -165,7 +171,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               </>
             ) : (
               <>
-                <Text fontSize={"20px"}>
+                <Text fontSize={"18px"} fontWeight={"500"}>
                   {selectedChat?.ChatName?.toUpperCase()}
                 </Text>
                 <UpdateGroupChatModal
@@ -180,12 +186,12 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
           <Flex
             flexDirection={"column"}
             justifyContent={"flex-end"}
-            bg="#E8E8E8"
+            bg="#E5DDD5"
             bgImage={bgImage}
             w="100%"
             h={{base:"85%",md:"100%"}}
-            
-            borderRadius={"lg"}
+
+            borderBottomRadius={"lg"}
             overflowY={"hidden"}
           >
             {loading ? (
@@ -230,18 +236,27 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )}
-              <Flex alignItems={'center'} mx='10px' gap='10px' mb={1} mt={1}>
+              <Flex alignItems={'center'} mx='10px' gap='10px' mb={2} mt={1}>
               <Input
-              colorScheme="#38B2AC"
                 variant={"filled"}
-                bgColor={'white'}
-                bg="#E0E0E0"
-                placeholder="Enter a message"
+                bg="white"
+                borderRadius="full"
+                _hover={{ bg: "white" }}
+                _focus={{ bg: "white" }}
+                placeholder="Type a message"
                 onChange={typingHandler}
                 value={newMessage}
-                
+                onKeyDown={(e) => e.key === "Enter" && sendMessage(e)}
               ></Input>
-              <IoMdSend size='20px' cursor={'pointer'} onClick={sendMessage}/>
+              <IconButton
+                aria-label="Send message"
+                icon={<IoMdSend size='18px'/>}
+                onClick={sendMessage}
+                isRound
+                bg="whatsapp.400"
+                color="white"
+                _hover={{ bg: "whatsapp.500" }}
+              />
               </Flex>
              
             </FormControl>
