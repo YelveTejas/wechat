@@ -12,8 +12,6 @@ import {
   Tooltip,
   useToast,
 } from "@chakra-ui/react";
-import axios from "axios";
-import { backendurl } from "../../pages/Home";
 import { FaPeopleGroup } from "react-icons/fa6";
 import Chatloading from "./Chatloading";
 import { getPic, getSender } from "../../config/Chatlogic";
@@ -23,16 +21,10 @@ import api from "../../config/axios";
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { user, setUser, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  
   const toast = useToast();
-// console.log(chats,'chats')
   const fetchChats = async () => {
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
       const { data } = await api.get('chat');
       setChats(data);
     } catch (error) {
@@ -51,9 +43,6 @@ const MyChats = ({ fetchAgain }) => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
   }, [fetchAgain]);
-  // console.log(loggedUser,'loggeduser')
-  console.log(chats,'chats')
-  console.log(loggedUser,'loggeduser')
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}

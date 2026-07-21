@@ -28,6 +28,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
   const [newMessage, setnewMessage] = useState("");
+  const userData = JSON.parse(localStorage.getItem("userInfo"));
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [allMessage, setallMessage] = useState([]);
@@ -50,7 +51,6 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   }, []);
 
   const sendMessage = async (e) => {
-   // console.log('e')
     if (newMessage) {
       socket.emit("stop typing", selectedChat._id);
       setnewMessage(e.target.value); ///typing indicator message
@@ -87,7 +87,6 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
       socket.emit("join chat", selectedChat._id);
       setLoading(false);
     } catch (error) {
-    //  console.log(error, "error");
       toast({
         title: "Error Occred",
         description: error.message,
@@ -139,8 +138,8 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
       }
     }, timerLength);
   };
-  console.log(user,'user')
-  console.log(selectedChat,'selectedChat')
+  console.log(selectedChat, "chats");
+  console.log(userData,'user')
   return (
     <>
       {selectedChat ? (
@@ -159,7 +158,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               <Flex alignItems={'center'} gap={3}>
                 <Avatar name={getSender(user,selectedChat.users)} size='sm' src={getPic(user,selectedChat.users)}/>
                 <Text fontSize={"22px"} fontWeight={"400"}>
-                  {selectedChat?.users[1]?.name}
+                  {getSender(user, selectedChat.users).toUpperCase()}
                 </Text>
                 </Flex>
                 <ProfileModal user={fullSender(user, selectedChat?.users)} />

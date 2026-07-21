@@ -6,6 +6,7 @@ const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [authChecked, setAuthChecked] = useState(false);
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState();
   const [notification,setNotification] = useState([])
@@ -17,7 +18,8 @@ const ChatProvider = ({ children }) => {
         setAccessToken(data.token);
         setUser(data);
       })
-      .catch(() => navigate("/"));
+      .catch(() => navigate("/"))
+      .finally(() => setAuthChecked(true));
   }, [navigate]);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const ChatProvider = ({ children }) => {
 
   return (
     <ChatContext.Provider
-      value={{ user, setUser, selectedChat, setSelectedChat, chats, setChats ,notification,setNotification}}
+      value={{ user, setUser, authChecked, selectedChat, setSelectedChat, chats, setChats ,notification,setNotification}}
     >
       {children}
     </ChatContext.Provider>

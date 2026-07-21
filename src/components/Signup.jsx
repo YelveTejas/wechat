@@ -29,7 +29,6 @@ const Signup = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
- // console.log(signupdata, "signupdata");
   const handleClick = () => {
     setShow((pre) => !pre);
   };
@@ -61,13 +60,10 @@ const Signup = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-          //    console.log(res,'res')
           setPic(res.url.toString());
-        
           setLoading(false);
         })
-        .catch((err) => {
-       //   console.log(err, "error");
+        .catch(() => {
           setLoading(false);
         });
     } else {
@@ -88,7 +84,6 @@ const Signup = () => {
       ...signupdata,
       pic: pic,
     };
-  //  console.log(signupDataWithPic,'pic')
     setLoading(true);
     if (
       !signupDataWithPic.name ||
@@ -154,10 +149,9 @@ const Signup = () => {
       // localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
     } catch (error) {
-      //console.log(error);
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
+        description: error?.response?.data?.message || "Something went wrong. Please try again.",
         status: "error",
         duration: 5000,
         isClosable: true,

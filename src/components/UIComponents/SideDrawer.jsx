@@ -30,7 +30,6 @@ import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
 import Chatloading from "./Chatloading";
 import Userslist from "./Userslist";
-import { config } from "../../config/token";
 //import {NotificationBadge} from 'react-no'
 import { getSender } from "../../config/Chatlogic";
 
@@ -53,7 +52,7 @@ const SideDrawer = () => {
     notification,
     setNotification,
   } = ChatState();
- //console.log(notification,'notification')
+
   const logoutHandler = () => {
     api.post("/user/logout").catch(() => {});
     setAccessToken(null);
@@ -75,16 +74,12 @@ const SideDrawer = () => {
 
     try {
       setLoading(true);
-    
-      const { data } = await api.get(
-        `user?search=${search}`,
-        config
-      );
+
+      const { data } = await api.get(`user?search=${search}`);
       setLoading(false);
     
       setSearchResults(data);
     } catch (error) {
-     // console.log(error)
       setLoading(false);
       toast({
         title: "Error Occred",
@@ -99,11 +94,7 @@ const SideDrawer = () => {
   const accessChat = async (userId) => {
     try {
       setChatloading(true);
-      const { data } = await api.post(
-        `chat`,
-        { userId },
-        config
-      );
+      const { data } = await api.post(`chat`, { userId });
       if (!chats.find((e) => e._id === data._id)) setChats([data, ...chats]); //this is to find out that if your user already have chat connection.
       setChatloading(false);
       setSelectedChat(data);

@@ -6,7 +6,6 @@ import { convertTimestampToTime } from "../../config/Chatlogic";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
-//console.log(messages,'messages')
   return (
     <>
       {messages &&
