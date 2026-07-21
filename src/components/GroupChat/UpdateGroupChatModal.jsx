@@ -1,9 +1,9 @@
 import {
   Box,
-  Button,
+  
   Flex,
   FormControl,
-  Heading,
+ 
   IconButton,
   Input,
   Text,
@@ -30,10 +30,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
   const [renameGroupChat, setRenameGroupChat] = useState("");
   const [searchUsers, setSearchUsers] = useState();
   const toast = useToast();
-  const [selectedUsers, setSelectedUsers] = useState([]);
+
   const [renameLoading, setRenameLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { selectedChat, setSelectedChat, user } = ChatState();
   const handleRename = async () => {
@@ -81,7 +81,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
       return;
     }
     try {
-      setLoading(true);
+    
       const { data } = await api.put("chat/remove", {
         chatId: selectedChat._id,
         userId: usertoRemove._id,
@@ -90,7 +90,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
       usertoRemove._id === user._id ? setSelectedChat("") : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       fetchAllMessages()
-      setLoading(false);
+     
     } catch (error) {
       toast({
         title: "error while removing from group",
@@ -107,9 +107,9 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
       return 0;
     }
     try {
-      setLoading(true);
+     
       const { data } = await api.get(`user?search=${searchUsers}`);
-      setLoading(false);
+      
       setSearchResults(data);
     } catch (error) {
       toast({
@@ -149,14 +149,14 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchAllMessages }) =
     }
 
     try {
-      setLoading(true);
+     
       const { data } = await api.put("chat/add", {
         chatId: selectedChat._id,
         userId: userToAdd._id,
       });
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
-      setLoading(false);
+     
     } catch (error) {
       toast({
         title: "Error while adding member to group",

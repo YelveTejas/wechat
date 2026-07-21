@@ -13,7 +13,6 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  MenuItemOption,
   MenuList,
   Spinner,
   Text,
@@ -24,7 +23,6 @@ import {
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
 import { ChatState } from "../../Context/ChatProvider";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";

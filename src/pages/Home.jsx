@@ -8,15 +8,11 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
 export { backendurl } from "../config/axios";
 const Home = () => {
-
-  useEffect(()=>{
-    const user = JSON.parse(localStorage.getItem("userInfo"))
-  })
   return (
     <Box minH={'100vh'} bg="gray.100">
     <Container maxW={"xl"} centerContent>

@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, Input, useDisclosure, useToast } from '@chakra-ui/react'
+import {  Button, Flex, FormControl, Input, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import {
   Modal,
@@ -18,10 +18,10 @@ const GroupChatModal = ({children}) => {
   const [groupChatName,setGroupChatName] = useState('')
   const [searchUsers,setSearchUsers] = useState("")
   const [searchResults,setSearchResults] = useState([])
-  const [loading,setLoading] = useState(false)
+
   const {isOpen,onOpen,onClose} = useDisclosure()
   const toast =useToast()
-  const {user,chats,setChats} = ChatState()
+  const {chats,setChats} = ChatState()
 
   const handleSearch = async (query) =>{
     setSearchUsers(query)
@@ -29,9 +29,9 @@ const GroupChatModal = ({children}) => {
       return 
     }
     try{
-   setLoading(true)
+
   const {data} = await api.get(`user?search=${searchUsers}`)
-    setLoading(false)
+
     setSearchResults(data)
     }catch(error){
       toast({

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import { useState } from "react";
 import {
@@ -23,7 +23,7 @@ const MyChats = ({ fetchAgain }) => {
   const { user, selectedChat, setSelectedChat, chats, setChats, notification } = ChatState();
 
   const toast = useToast();
-  const fetchChats = async () => {
+  const fetchChats = useCallback(async () => {
     try {
       const { data } = await api.get('chat');
       setChats(data);
@@ -37,12 +37,12 @@ const MyChats = ({ fetchAgain }) => {
         position: "top-right",
       });
     }
-  };
+  }, [setChats, toast]);
 
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, [fetchAgain]);
+  }, [fetchAgain, fetchChats]);
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
