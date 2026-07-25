@@ -47,6 +47,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sendMessage = async (e) => {
@@ -100,6 +101,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     fetchAllMessages();
     selectedChatCompare = selectedChat;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChat]);
 
   useEffect(() => {
