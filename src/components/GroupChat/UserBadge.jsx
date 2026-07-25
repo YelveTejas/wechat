@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 import { RxCross2 } from "react-icons/rx";
 

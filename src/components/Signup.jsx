@@ -146,7 +146,7 @@ const Signup = () => {
         isClosable: true,
         position: "top-right",
       });
-      // localStorage.setItem("userInfo", JSON.stringify(data));
+       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
     } catch (error) {
       toast({
