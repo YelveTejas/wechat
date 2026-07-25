@@ -7,12 +7,15 @@ import { convertTimestampToTime } from "../../config/Chatlogic";
 const bubbleShadow = "0 1px 0.5px rgba(0,0,0,0.13)";
 
 const ScrollableChat = ({ messages }) => {
-  const { user } = ChatState();
+
+  const user  = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
+
   return (
     <>
       {messages &&
         messages.map((message) => {
-          const isOwn = message.sender._id === user._id;
+          const isOwn = message?.sender._id === user?._id;
+        
           return (
             <Flex key={message._id} mb={"3px"} px={3}>
               <Box

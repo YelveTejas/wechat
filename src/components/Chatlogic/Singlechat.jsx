@@ -26,8 +26,9 @@ var socket, selectedChatCompare;
 
 const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
-  const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
+  const {  selectedChat, setSelectedChat, notification, setNotification } = ChatState();
   const [newMessage, setnewMessage] = useState("");
+  const user = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [allMessage, setallMessage] = useState([]);
@@ -47,6 +48,10 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
+
+    return () => {
+      socket.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,6 +81,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const fetchAllMessages = async () => {
+  
     if (!selectedChat) {
       return;
     }
@@ -105,7 +111,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on("message received", (newMessageReceived) => {
+    const handleMessageReceived = (newMessageReceived) => {
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageReceived.chat._id
@@ -118,7 +124,13 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
       } else {
         setallMessage([...allMessage, newMessageReceived]);
       }
-    });
+    };
+
+    socket.on("message received", handleMessageReceived);
+
+    return () => {
+      socket.off("message received", handleMessageReceived);
+    };
   });
   const typingHandler = (e) => {
     setnewMessage(e.target.value);
@@ -139,6 +151,7 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
       }
     }, timerLength);
   };
+
   return (
     <>
       {selectedChat ? (
@@ -227,8 +240,8 @@ const Singlechat = ({ fetchAgain, setFetchAgain }) => {
               </Flex>
             )}
             <FormControl isRequired>
-              {isTyping ? (
-                <Box>
+              {isTyping  ? (
+                <Box >
                   <Lottie
                     options={defaultOptions}
                     width={50}
