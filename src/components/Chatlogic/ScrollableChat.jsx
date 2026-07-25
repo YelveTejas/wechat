@@ -1,7 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-
-import { ChatState } from "../../Context/ChatProvider";
 import { convertTimestampToTime } from "../../config/Chatlogic";
 
 const bubbleShadow = "0 1px 0.5px rgba(0,0,0,0.13)";
