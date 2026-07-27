@@ -1,9 +1,14 @@
 import axios from 'axios'
 
-export const backendurl = process.env.REACT_APP_BACKEND_URL || 'https://wechat-backend-fob0.onrender.com/'
+export const backendurl = process.env.REACT_APP_BACKEND_URL
+
+// REST calls go through the same-origin /api rewrite (see vercel.json) so the
+// refresh-token cookie is first-party instead of being blocked as third-party
+// cross-site. Socket.io still connects directly via `backendurl` above.
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || (process.env.NODE_ENV === 'production' ? '/api' : backendurl)
 
 const api = axios.create({
-  baseURL: backendurl,
+  baseURL: apiBaseUrl,
   withCredentials: true,
 })
 
